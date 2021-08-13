@@ -34,9 +34,9 @@ export const getExchangeOptions = (
   return options;
 };
 
-export const initExchangeService = (
+export const initExchangeService = async (
   exchangeId: ExchangeId
-): ExchangeService => {
+): Promise<ExchangeService> => {
   switch (exchangeId) {
     case ExchangeId.Binance:
       return new BinanceSpotExchangeService();
@@ -50,7 +50,9 @@ export const initExchangeService = (
       return new KrakenExchangeService();
     case ExchangeId.FTX:
     default:
-      return new FTXExchangeService();
+      const ex = new FTXExchangeService();
+      await ex.init();
+      return ex;
   }
 };
 

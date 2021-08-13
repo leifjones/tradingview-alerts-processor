@@ -16,7 +16,7 @@ export const getMarkets = async (
 ): Promise<void> => {
   const exchange = req.params.exchange as ExchangeId;
   try {
-    const markets = await TradingService.getTradeExecutor(exchange)
+    const markets = await (await TradingService.getTradeExecutor(exchange))
       .getExchangeService()
       .getMarkets();
     res.write(

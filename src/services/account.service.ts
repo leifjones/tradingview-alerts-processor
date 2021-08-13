@@ -32,7 +32,7 @@ export const writeAccount = async (account: Account): Promise<Account> => {
     }
   } catch (err) {
     try {
-      await TradingService.getTradeExecutor(exchange)
+      await (await TradingService.getTradeExecutor(exchange))
         .getExchangeService()
         .refreshSession(account);
     } catch (err) {
