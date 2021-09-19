@@ -12,7 +12,7 @@ export class TradingService {
   ): Promise<TradingExecutor> => {
     if (!TradingService.executors.get(exchangeId)) {
       const service = new TradingExecutor(exchangeId);
-      await service.init()
+      await service.init();
       TradingService.executors.set(exchangeId, service);
       service.start();
     }

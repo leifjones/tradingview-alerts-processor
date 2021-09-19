@@ -38,9 +38,9 @@ export class TradingExecutor {
     this.id = id;
   }
 
-  init = async () => {
+  init = async (): Promise<void> => {
     this.exchangeService = await initExchangeService(this.id);
-  }
+  };
 
   getExchangeService = (): ExchangeService => this.exchangeService;
 

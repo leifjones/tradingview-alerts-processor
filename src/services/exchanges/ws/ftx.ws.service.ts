@@ -31,13 +31,17 @@ export class FTXExchangeWSService {
   tickers: Record<string, IFTXWSTicker> = {}; // ticker symbol / ticker
 
   static init = async (): Promise<FTXExchangeWSService> => {
-    const ws = new FTXExchangeWSService()
+    const ws = new FTXExchangeWSService();
     await ws.connect(ws.sockets[DEFAULT_SOCKET].ws);
-    console.log(`Opening FTX public socket.`);
+    //console.log(`Opening FTX public socket.`);
     return ws;
-  }
+  };
 
-  send = (ws: WebSocket, message: Record<string, any>, account?: Account) => {
+  send = (
+    ws: WebSocket,
+    message: Record<string, any>,
+    account?: Account
+  ): void => {
     if (message.op === 'subscribe') {
       this.sockets[account ? account.stub : DEFAULT_SOCKET].subs.push(message);
     } else if (message.op !== 'ping') {
@@ -62,7 +66,7 @@ export class FTXExchangeWSService {
         }
         switch (msg.channel) {
           case 'ticker':
-            this.tickers[getFTXBaseSymbol(msg.market)] = msg.data
+            this.tickers[getFTXBaseSymbol(msg.market)] = msg.data;
             break;
           // case 'orders':
           // case 'fills':

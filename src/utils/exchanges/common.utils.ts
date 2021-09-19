@@ -49,10 +49,11 @@ export const initExchangeService = async (
     case ExchangeId.Kraken:
       return new KrakenExchangeService();
     case ExchangeId.FTX:
-    default:
+    default: {
       const ex = new FTXExchangeService();
       await ex.init();
       return ex;
+    }
   }
 };
 

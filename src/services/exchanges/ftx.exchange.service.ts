@@ -18,7 +18,10 @@ import {
 } from '../../utils/trading/conversion.utils';
 import { getInvertedSide, getSide } from '../../utils/trading/side.utils';
 import { FTXExchangeWSService } from './ws/ftx.ws.service';
-import { TICKER_READ_ERROR, TICKER_READ_SUCCESS } from '../../messages/exchanges.messages';
+import {
+  TICKER_READ_ERROR,
+  TICKER_READ_SUCCESS
+} from '../../messages/exchanges.messages';
 import { TickerFetchError } from '../../errors/exchange.errors';
 import { getTickerPrice } from '../../utils/trading/ticker.utils';
 
@@ -29,24 +32,24 @@ export class FTXExchangeService extends CompositeExchangeService {
     super(ExchangeId.FTX);
   }
 
-  init = async () => {
-    this.ws = await FTXExchangeWSService.init()
-  }
+  init = async (): Promise<void> => {
+    this.ws = await FTXExchangeWSService.init();
+  };
 
   getTicker = async (symbol: string): Promise<Ticker> => {
     try {
       let ticker: Ticker;
-      const base = getFTXBaseSymbol(symbol)
+      const base = getFTXBaseSymbol(symbol);
       if (!this.ws.tickers[base]) {
         this.ws.addTicker(symbol);
         ticker = await this.defaultExchange.fetchTicker(symbol);
       } else {
-        ticker = {symbol, ...this.ws.tickers[base]} as unknown as Ticker
+        ticker = { symbol, ...this.ws.tickers[base] } as unknown as Ticker;
       }
       debug(TICKER_READ_SUCCESS(this.exchangeId, symbol, ticker));
       return ticker;
     } catch (err) {
-      console.log(err)
+      //console.log(err);
       error(TICKER_READ_ERROR(this.exchangeId, symbol), err);
       throw new TickerFetchError(
         TICKER_READ_ERROR(this.exchangeId, symbol, err.message)
@@ -66,7 +69,7 @@ export class FTXExchangeService extends CompositeExchangeService {
   ): Promise<IOrderOptions> => {
     const { size } = trade;
     const { symbol } = ticker;
-    const price = getTickerPrice(ticker, this.exchangeId)
+    const price = getTickerPrice(ticker, this.exchangeId);
     // we add a check since FTX is a composite exchange
     if (isFTXSpot(ticker)) {
       const balance = await this.getTickerBalance(account, ticker);
