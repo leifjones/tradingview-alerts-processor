@@ -1,6 +1,14 @@
+import { FTXExchangeService } from '..';
+import { ExchangeId } from '../../../constants/exchanges.constants';
+
 describe('FTX exchange service', () => {
   describe('constructor', () => {
-    it.todo('should set exchange id');
+    it('should set exchange id and set defaultExchange', () => {
+      const exchangeId = ExchangeId.FTX;
+      const exchange = new FTXExchangeService();
+      expect(exchange.exchangeId).toEqual(exchangeId);
+      expect(exchange.defaultExchange.constructor.name).toBe(exchangeId);
+    });
   });
 
   describe('fetchPositions', () => {
