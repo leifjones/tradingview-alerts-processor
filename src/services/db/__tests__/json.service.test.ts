@@ -35,7 +35,7 @@ describe('JSON database service', () => {
     });
 
     /**
-     * Confirms that an errow thrown by this.instance.getData() is propagated.
+     * Confirms that an error thrown by this.instance.getData() is propagated.
      */
     it('should throw error', () => {
       const mockGetData = jest.fn(() => {
@@ -182,7 +182,7 @@ describe('JSON database service', () => {
       expect(value).toEqual(value);
     });
 
-    it('should thorw error', () => {
+    it('should throw error', () => {
       const mockDelete = jest.fn(() => {
         throw new Error();
       });

@@ -13,10 +13,11 @@ import { validateTrade } from '../validators/trade.validators';
 import { getSide } from '../utils/trading/side.utils';
 import { DatabaseService } from '../services/db/db.service';
 import { Account } from '../entities/account.entities';
+import { DatabaseDeleteError, DatabaseReadError } from '../errors/db.errors';
 
 const router = Router();
 
-// TODO refacto
+// TODO refactor
 export const postTrade = async (req: Request, res: Response): Promise<void> => {
   try {
     if (Array.isArray(req.body)) {
@@ -158,9 +159,16 @@ async function deleteOldRecords(
 ) {
   const db = DatabaseService.getDatabaseInstance();
   try {
-    await db.delete(`${stub}/orders/${symbol}/${chart}/${TCycles - 2}`);
+    if (db.read(`${stub}/orders/${symbol}/${chart}/${TCycles - 2}`)) {
+      db.delete(`${stub}/orders/${symbol}/${chart}/${TCycles - 2}`);
+    }
   } catch (error) {
-    console.log(error);
+    if (
+      !(error instanceof DatabaseDeleteError) &&
+      !(error instanceof DatabaseReadError)
+    ) {
+      throw error;
+    }
   }
 }
 
