@@ -1,4 +1,8 @@
-# TradingView alerts processor
+# TradingView alerts processor + Duplicate Alerts Guard
+
+>
+> *This is a fork of [TradingView Alerts Processor](https://github.com/thibaultyou/tradingview-alerts-processor) with an added feature of blocking duplicates that have come through. It uses conventions that are part of an indicator-on-indicator module made available to subscribers of the [Jackrabbit Discord server](https://discord.gg/mNMVWXpAGd), also mentioned below. See documentation of this feature [here](docs/2_Alerts.md#duplicate-alert-guard).*
+>
 
 [![Docker build status](https://img.shields.io/docker/cloud/build/madamefleur/tradingview-alerts-processor)](https://hub.docker.com/repository/docker/madamefleur/tradingview-alerts-processor) &nbsp; [![Docker image size](https://img.shields.io/docker/image-size/madamefleur/tradingview-alerts-processor)](https://hub.docker.com/repository/docker/madamefleur/tradingview-alerts-processor/tags?page=1&ordering=last_updated)
 

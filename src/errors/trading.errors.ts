@@ -11,3 +11,5 @@ export class OrderSizeError extends AbstractError {}
 export class TradeExecutionError extends AbstractError {}
 
 export class NoOpenPositionError extends AbstractError {}
+
+export class DuplicateTradeError extends AbstractError {}
